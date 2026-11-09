@@ -15,6 +15,10 @@
         <maven.compiler.release>17</maven.compiler.release>
         <kotlin.version>2.1.20</kotlin.version>
         <junit.version>5.11.4</junit.version>
+
+        <!-- SonarCloud -->
+        <sonar.sources>src/com/example</sonar.sources>
+        <sonar.tests>src/com/test</sonar.tests>
     </properties>
 
     <dependencies>
@@ -50,6 +54,7 @@
         <testSourceDirectory>src</testSourceDirectory>
 
         <plugins>
+            <!-- Kotlin -->
             <plugin>
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-maven-plugin</artifactId>
@@ -63,13 +68,14 @@
                         </goals>
                         <configuration>
                             <sourceDirs>
-                                <sourceDir>${project.basedir}/src</sourceDir>
+                                <sourceDir>${project.basedir}/src/com/example</sourceDir>
                             </sourceDirs>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
 
+            <!-- Java compiler -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -83,7 +89,6 @@
                 <executions>
                     <execution>
                         <id>default-compile</id>
-                        <phase>compile</phase>
                     </execution>
                     <execution>
                         <id>default-testCompile</id>
@@ -91,11 +96,13 @@
                             <includes>
                                 <include>com/test/**/*.java</include>
                             </includes>
+                            <excludes combine.self="override"/>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
 
+            <!-- JUnit 5 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
